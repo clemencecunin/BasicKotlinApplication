@@ -7,18 +7,21 @@ import com.google.firebase.ktx.Firebase
 
 class UserViewModel: ViewModel() {
 
-    var username = mutableStateOf("Test")
+    var useremail = mutableStateOf("")
+    var username = mutableStateOf("")
 
     fun login(email: String, passwd: String){
         Firebase.auth
             .signInWithEmailAndPassword(email,passwd)
             .addOnSuccessListener {
-                username.value = email
+                useremail.value = email
+                username.value = email.substringBefore("@")
             }
     }
 
     fun logout(){
         Firebase.auth.signOut()
         username.value = ""
+        useremail.value = ""
     }
 }
